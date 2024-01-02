@@ -1,0 +1,14 @@
+route = 10.0.0.2/255.255.255.255
+route = 10.0.0.1/255.255.255.255
+# If set, the script /usr/bin/ocserv-fw will be called to restrict
+# the user to its allowed routes and prevent him from accessing
+# any other routes. In case of defaultroute, the no-routes are restricted.
+# All the routes applied by ocserv can be reverted using /usr/bin/ocserv-fw
+# --removeall. This option can be set globally or in the per-user configuration.
+#restrict-user-to-routes = true
+
+# This option implies restrict-user-to-routes set to true. If set, the
+# script /usr/bin/ocserv-fw will be called to restrict the user to
+# access specific ports in the network. This option can be set globally
+# or in the per-user configuration.
+restrict-user-to-ports = "tcp(8080), tcp(445), tcp(80), udp(443), sctp(99), tcp(583), icmp(), icmpv6()"
