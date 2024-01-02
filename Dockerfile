@@ -1,8 +1,9 @@
-FROM ubuntu:trusty
+FROM ubuntu:jammy
 MAINTAINER Wyatt Pan <wppurking@gmail.com>
 
 ADD ./certs /opt/certs
 ADD ./bin /usr/local/bin
+#ADD ./radcli /etc/radcli
 ADD dnsmasq.conf /usr/local/etc/dnsmasq.conf
 RUN chmod a+x /usr/local/bin/*
 WORKDIR /etc/ocserv
@@ -16,7 +17,10 @@ RUN apt-get update && apt-get install -y \
     libev-dev libwrap0-dev libpam0g-dev libseccomp-dev libreadline-dev \
     libnl-route-3-dev libkrb5-dev liboath-dev libtalloc-dev \
     libhttp-parser-dev libpcl1-dev libopts25-dev autogen pkg-config nettle-dev \
-    gnutls-bin gperf liblockfile-bin nuttcp lcov iptables unzip dnsmasq \
+    libradcli4 libradcli-dev vim less \
+    #freeradius-utils \
+    #freeradius freeradius-utils \
+    gnutls-bin gperf liblockfile-bin nuttcp lcov iptables unzip dnsmasq curl \
     && rm -rf /var/lib/apt/lists/*
 
 # configuration dnsmasq
@@ -67,4 +71,9 @@ RUN certtool --generate-privkey --outfile /opt/certs/user-key.pem && certtool --
 # generate user.p12 [user-key, user-cert, ca-cert]
 RUN openssl pkcs12 -export -inkey /opt/certs/user-key.pem -in /opt/certs/user-cert.pem -certfile /opt/certs/ca-cert.pem -out /opt/certs/user.p12 -passout pass:616
 
+
 CMD ["vpn_run"]
+
+# 健康检查命令，验证容器内的 443 端口是否可以访问（忽略证书错误）
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f -k  https://localhost:443 || exit 1
