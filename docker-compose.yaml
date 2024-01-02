@@ -1,0 +1,13 @@
+version: '3'
+services:
+  ocserv-docker:
+    image: ocserv-ljc:v1.2
+    privileged: true
+    container_name: ocserv
+    restart: always
+    volumes:
+      - /root/ocserv-docker/ocserv:/etc/ocserv
+      - /root/ocserv-docker/ocserv/certs:/opt/certs
+      - /root/ocserv-docker/radcli:/etc/radcli
+    ports:
+      - 443:443/tcp
