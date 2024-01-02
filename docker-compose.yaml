@@ -7,7 +7,7 @@ services:
     restart: always
     volumes:
       - /root/ocserv-docker/ocserv:/etc/ocserv
-      - /root/ocserv-docker/ocserv/certs:/opt/certs
-      - /root/ocserv-docker/radcli:/etc/radcli
+     # - /root/ocserv-docker/ocserv/certs:/opt/certs
+     # - /root/ocserv-docker/radcli:/etc/radcli
     ports:
       - 443:443/tcp
