@@ -90,8 +90,15 @@ $> Re-enter password:
 
 
 
+## 构建自己的镜像
+git clone https://github.com/ID404/ocserv-docker.git
+cd ocserv-docker
+docker build -t ocserv-ljc .
 
+##启动镜像
+docker compose up -d
 
+### 镜像检查命令
 docker exec -it ocserv occtl show status
 
 docker exec -it ocserv occtl show users
