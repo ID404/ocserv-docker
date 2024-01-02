@@ -97,8 +97,26 @@ git clone https://github.com/ID404/ocserv-docker.git
 cd ocserv-docker
 docker build -t ocserv-ljc .
 
-##启动镜像
+## 启动镜像
 docker compose up -d
+
+## radius对接
+radius客户端配置
+修改容器内 /etc/radcli/radiusclient.conf 设置radius服务器ip和端口
+修改/etc/radcli/servers 设置radius服务器密钥
+
+修改 ocserv.conf
+取消注释
+auth = "radius [config=/etc/radcli/radiusclient.conf,groupconfig=false]"
+添加注释
+#auth = "plain[passwd=/etc/ocserv/ocpasswd]"
+
+#config-per-group = /etc/ocserv/group/
+#default-group-config = /etc/ocserv/group/users
+#default-select-group = users
+#auto-select-group = false
+
+
 
 ### 镜像检查命令
 docker exec -it ocserv occtl show status
