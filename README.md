@@ -92,10 +92,15 @@ $> Re-enter password:
 
 
 
-docker exec -it ocserv occtl show status   
+docker exec -it ocserv occtl show status
+
 docker exec -it ocserv occtl show users
+
 docker exec -it ocserv occtl show sessions all
+
 docker exec -it ocserv occtl show events
+
 docker exec -it ocserv occtl reload
+
 docker exec -it ocserv occtl disconnect user XXXX
 
